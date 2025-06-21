@@ -1,13 +1,12 @@
-
 import { useState } from "react";
 import { Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import WelcomeHero from "@/components/WelcomeHero";
 import PantryDashboard from "@/components/PantryDashboard";
 import AddItemModal from "@/components/AddItemModal";
 import StatsCards from "@/components/StatsCards";
+import ThemePicker from "@/components/ThemePicker";
+import { useTheme } from "@/contexts/ThemeContext";
 
 export interface PantryItem {
   id: string;
@@ -21,6 +20,7 @@ export interface PantryItem {
 }
 
 const Index = () => {
+  const { currentTheme } = useTheme();
   const [showWelcome, setShowWelcome] = useState(true);
   const [showAddModal, setShowAddModal] = useState(false);
   const [pantryItems, setPantryItems] = useState<PantryItem[]>([
@@ -87,12 +87,14 @@ const Index = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50">
+    <div className={`min-h-screen ${currentTheme.colors.background} relative`}>
+      <ThemePicker />
+      
       <div className="container mx-auto px-4 py-6">
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-green-800 mb-2">🥬 ShelfLife</h1>
-          <p className="text-lg text-gray-600">Your friendly kitchen companion</p>
+          <h1 className={`text-4xl font-bold ${currentTheme.colors.text} mb-2`}>🥬 ShelfLife</h1>
+          <p className={`text-lg ${currentTheme.colors.textSecondary}`}>Your friendly kitchen companion</p>
         </div>
 
         {/* Stats Cards */}
@@ -102,7 +104,7 @@ const Index = () => {
         <div className="flex justify-center mb-6">
           <Button 
             onClick={() => setShowAddModal(true)}
-            className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105"
+            className={`${currentTheme.colors.primary} ${currentTheme.colors.primaryHover} text-white px-6 py-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105`}
             size="lg"
           >
             <Plus className="mr-2 h-5 w-5" />
