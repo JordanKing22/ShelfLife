@@ -105,7 +105,7 @@ npm start
 
 ### 5. Access the Application
 
-Open your browser to: `http://localhost:8086`
+Open your browser to: `http://localhost:8080`
 
 ## Security Notes
 
@@ -115,7 +115,7 @@ The `.env` file is already included in `.gitignore` to prevent accidental commit
 
 ## Architecture
 
-- **Frontend**: React app running on port 8086
+- **Frontend**: React app running on port 8080
 - **Main Backend**: Express server on port 3001 (handles auth, pantry, recipes)
 - **Veryfi Proxy**: Express server on port 3002 (handles receipt OCR)
 - **Database**: MongoDB for user data, pantry items, and recipes
