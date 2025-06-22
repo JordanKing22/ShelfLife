@@ -27,13 +27,8 @@ const categories = [
 const units = [
   'piece(s)',
   'cup(s)',
-  'pound(s)',
-  'kilogram(s)',
-  'liter(s)',
-  'bottle(s)',
-  'can(s)',
   'bag(s)',
-  'box(es)',
+  'bottle(s)',
   'carton(s)'
 ];
 

@@ -14,7 +14,7 @@ const ThemePicker = () => {
       {/* Theme Picker Button */}
       <Button
         onClick={() => setIsOpen(true)}
-        className={`fixed top-4 right-4 z-40 ${currentTheme.colors.primary} ${currentTheme.colors.primaryHover} text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105`}
+        className={`${currentTheme.colors.primary} ${currentTheme.colors.primaryHover} text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105`}
         size="sm"
       >
         <Palette className="h-4 w-4 mr-2" />
