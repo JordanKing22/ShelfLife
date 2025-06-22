@@ -4,6 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { ChefHat, Leaf, TrendingUp } from "lucide-react";
 import { useTheme } from "@/contexts/ThemeContext";
 import ThemePicker from "./ThemePicker";
+import Logo from "@/components/ui/logo";
 
 interface WelcomeHeroProps {
   onGetStarted: () => void;
@@ -20,9 +21,9 @@ const WelcomeHero = ({ onGetStarted }: WelcomeHeroProps) => {
       
       <div className="max-w-6xl mx-auto text-center">
         <div className="mb-8 animate-fade-in">
-          <h1 className={`text-6xl font-bold ${currentTheme.colors.text} mb-4`}>
-            🥬 ShelfLife
-          </h1>
+          <div className="mb-6">
+            <Logo size="xl" />
+          </div>
           <p className="text-2xl text-gray-700 mb-2">
             Your friendly kitchen companion
           </p>

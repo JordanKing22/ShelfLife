@@ -9,6 +9,7 @@
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
     "preview": "vite preview",
+    "setup": "node setup-env.js",
     "server:install": "cd server && npm install",
     "server:dev": "cd server && npm run dev",
     "server:start": "cd server && npm start",

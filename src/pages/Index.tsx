@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { Plus, LogOut, Home, ChefHat, Users } from "lucide-react";
+import { Plus, LogOut, Home, ChefHat, Users, FastForward } from "lucide-react";
+import Logo from "@/components/ui/logo";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContext";
 import { useTheme } from "@/contexts/ThemeContext";
@@ -8,6 +9,7 @@ import WelcomeHero from "@/components/WelcomeHero";
 import PantryDashboard from "@/components/PantryDashboard";
 import AddItemModal from "@/components/AddItemModal";
 import StatsCards from "@/components/StatsCards";
+import AnalyticsSection from "@/components/AnalyticsSection";
 import ThemePicker from "@/components/ThemePicker";
 import ReceiptScanner from "@/components/ReceiptScanner";
 import RecipeSuggestions from "@/components/RecipeSuggestions";
@@ -500,6 +502,53 @@ const Index = () => {
     });
   };
 
+  // Demo function to advance dates for testing expiry notifications
+  const handleAdvanceDates = async () => {
+    try {
+      const daysToAdvance = 2; // Advance by 2 days
+      const updatedItems = pantryItems.map(item => {
+        const currentExpiry = new Date(item.expiryDate);
+        const newExpiry = new Date(currentExpiry);
+        newExpiry.setDate(currentExpiry.getDate() - daysToAdvance);
+        
+        return {
+          ...item,
+          expiryDate: newExpiry.toISOString().split('T')[0],
+          status: getItemStatus(newExpiry.toISOString().split('T')[0])
+        };
+      });
+
+      // Update all items in the database
+      for (const item of updatedItems) {
+        if (item._id || item.id) {
+          await apiService.updatePantryItem(item._id || item.id!, {
+            expiryDate: item.expiryDate
+          });
+        }
+      }
+
+      setPantryItems(updatedItems);
+      
+      const newExpiringCount = updatedItems.filter(item => {
+        const days = Math.ceil((new Date(item.expiryDate).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24));
+        return days <= 3 && days >= 0;
+      }).length;
+
+      toast({
+        title: "🕐 Demo: Dates Advanced!",
+        description: `Moved all expiry dates forward by ${daysToAdvance} days. ${newExpiringCount} items are now expiring soon!`,
+        duration: 5000
+      });
+    } catch (error) {
+      console.error('Error advancing dates:', error);
+      toast({
+        title: "Error",
+        description: "Failed to advance dates. Please try again.",
+        variant: "destructive"
+      });
+    }
+  };
+
   const expiringItems = getExpiringItems();
 
   if (loading) {
@@ -565,6 +614,15 @@ const Index = () => {
             </Button>
           )}
           <Button
+            onClick={handleAdvanceDates}
+            variant="outline"
+            className="text-blue-600 hover:text-blue-800 border-blue-300 hover:border-blue-500"
+            size="sm"
+          >
+            <FastForward className="h-4 w-4 mr-2" />
+            Demo: Advance Dates
+          </Button>
+          <Button
             onClick={() => setShowOnboarding(true)}
             variant="ghost"
             className="text-gray-600 hover:text-gray-800"
@@ -590,12 +648,8 @@ const Index = () => {
         <div className="max-w-6xl mx-auto">
           {/* Header */}
           <div className="text-center mb-8">
-            <div className="mb-4">
-              <div className="inline-block p-4 rounded-full bg-gradient-to-br from-green-400 to-green-600 shadow-lg">
-                <div className="text-white text-4xl font-bold">
-                  🥬 ShelfLife
-                </div>
-              </div>
+            <div className="mb-6">
+              <Logo size="xl" />
             </div>
             <h1 className={`text-4xl font-bold ${currentTheme.colors.text} mb-4`}>
               Your Smart Kitchen
@@ -607,6 +661,9 @@ const Index = () => {
 
                     {/* Stats Cards */}
           <StatsCards items={pantryItems} savedItemsCount={savedItemsCount} />
+          
+          {/* Analytics Section */}
+          <AnalyticsSection items={pantryItems} savedItemsCount={savedItemsCount} />
           
           {/* Action Buttons */}
           <div className="flex gap-4 justify-center mb-8">

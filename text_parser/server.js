@@ -1,6 +1,10 @@
 const express = require('express');
 const cors = require('cors');
 const axios = require('axios');
+const path = require('path');
+
+// Load .env from parent directory (project root)
+require('dotenv').config({ path: path.join(__dirname, '..', '.env') });
 
 const app = express();
 
@@ -10,10 +14,18 @@ app.use(express.json({ limit: '50mb' })); // Large limit for image data
 
 // Veryfi API configuration
 const VERYFI_CONFIG = {
-  clientId: 'vrfjuzJUEiI0dmHvzCGc9MzBsA1rEnzm6ZnUna1',
-  apiKey: 'jordanaking77:4e5b6cc249a3bd9b200d4c50cb342f38',
+  clientId: process.env.VERYFI_CLIENT_ID,
+  apiKey: process.env.VERYFI_API_KEY,
   baseUrl: 'https://api.veryfi.com/api/v8/partner/documents'
 };
+
+// Validate required environment variables
+if (!VERYFI_CONFIG.clientId || !VERYFI_CONFIG.apiKey) {
+  console.error('❌ Veryfi API credentials are required');
+  console.error('Please set VERYFI_CLIENT_ID and VERYFI_API_KEY in your .env file');
+  console.error('Sign up at https://www.veryfi.com/ to get your API credentials');
+  process.exit(1);
+}
 
 // Proxy endpoint for Veryfi uploads
 app.post('/api/veryfi-upload', async (req, res) => {
@@ -61,7 +73,7 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', message: 'Veryfi proxy server is running' });
 });
 
-const PORT = process.env.PORT || 3002;
+const PORT = process.env.VERYFI_PROXY_PORT || 3002;
 app.listen(PORT, () => {
   console.log('🚀 Veryfi proxy server running on http://localhost:' + PORT);
   console.log('📋 Available endpoints:');

@@ -8,6 +8,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useTheme } from '@/contexts/ThemeContext';
 import { useToast } from '@/hooks/use-toast';
 import ThemePicker from './ThemePicker';
+import Logo from '@/components/ui/logo';
 import { ChefHat, Leaf, TrendingUp, Mail, Lock, User } from 'lucide-react';
 
 const LoginPage = () => {
@@ -118,9 +119,9 @@ const LoginPage = () => {
       <div className="max-w-6xl mx-auto text-center">
         {/* Logo & Header */}
         <div className="mb-8 animate-fade-in">
-          <h1 className={`text-6xl font-bold ${currentTheme.colors.text} mb-4`}>
-            🥬 ShelfLife
-          </h1>
+          <div className="mb-6">
+            <Logo size="xl" />
+          </div>
           <p className="text-2xl text-gray-700 mb-2">
             Your friendly kitchen companion
           </p>

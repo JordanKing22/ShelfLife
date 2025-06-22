@@ -3,14 +3,28 @@ import cors from 'cors';
 import pkg from 'mongodb';
 const { MongoClient, ServerApi, ObjectId } = pkg;
 import dotenv from 'dotenv';
+import path from 'path';
 
-dotenv.config();
+// Load .env file - check both current directory and parent directory
+import { fileURLToPath } from 'url';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Try to load .env from parent directory (project root)
+dotenv.config({ path: path.join(__dirname, '..', '.env') });
 
 const app = express();
 const PORT = process.env.PORT || 3001;
 
 // MongoDB connection
-const uri = "mongodb+srv://jordanaking77:LUQkUn6GJp9iJHWS@cluster0.h065a38.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+const uri = process.env.MONGODB_URI;
+
+if (!uri) {
+  console.error('❌ MONGODB_URI environment variable is required');
+  console.error('Please create a .env file with your MongoDB connection string');
+  process.exit(1);
+}
+
 const client = new MongoClient(uri, {
   serverApi: {
     version: '1',

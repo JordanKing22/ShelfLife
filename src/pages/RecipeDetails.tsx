@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { ArrowLeft, ChefHat, Clock, Users } from 'lucide-react';
 import { useTheme } from '@/contexts/ThemeContext';
 import ThemePicker from '@/components/ThemePicker';
+import Logo from '@/components/ui/logo';
 
 const RecipeDetails = () => {
   const location = useLocation();
@@ -32,7 +33,9 @@ const RecipeDetails = () => {
 
       <div className="container mx-auto px-4 py-6">
         <div className="text-center mb-8">
-          <h1 className={`text-4xl font-bold ${currentTheme.colors.text} mb-2`}>🥬 ShelfLife</h1>
+          <div className="mb-4">
+            <Logo size="lg" />
+          </div>
           <p className={`text-lg ${currentTheme.colors.textSecondary}`}>Your friendly kitchen companion</p>
         </div>
         

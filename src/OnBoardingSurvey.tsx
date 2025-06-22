@@ -8,6 +8,7 @@ import { useTheme } from '@/contexts/ThemeContext';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
 import { Loader2, Users, Heart, ChefHat, ArrowLeft } from 'lucide-react';
+import Logo from '@/components/ui/logo';
 
 interface OnboardingSurveyProps {
   onComplete: () => void;
@@ -143,8 +144,11 @@ const OnboardingSurvey = ({ onComplete, onCancel }: OnboardingSurveyProps) => {
         
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className={`text-4xl font-bold ${currentTheme.colors.text} mb-2`}>
-            🥬 Let's set up your kitchen!
+          <div className="mb-4">
+            <Logo size="lg" />
+          </div>
+          <h1 className={`text-3xl font-bold ${currentTheme.colors.text} mb-2`}>
+            Let's set up your kitchen!
           </h1>
           <p className={`text-lg ${currentTheme.colors.textSecondary}`}>
             Help us personalize your ShelfLife experience
