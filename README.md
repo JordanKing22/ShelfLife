@@ -93,7 +93,7 @@ cd ..
 
 Start all services (requires 3 terminals):
 
-**Terminal 1 - Frontend (Port 8086):**
+**Terminal 1 - Frontend (Port 8080):**
 ```bash
 npm run dev
 ```
