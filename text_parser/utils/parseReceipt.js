@@ -2,43 +2,15 @@ export function parseItemsFromText(text) {
   console.log("🧾 Starting to parse receipt text...");
   const lines = text.split("\n").map((line) => line.trim()).filter(Boolean);
 
-  // Expanded food database with better coverage
+  // sample food database with expiry for ocr fallback
   const knownExpiryDays = {
-    // Original core foods
     milk: 7, bread: 4, cheese: 14, yogurt: 10, apples: 21, bananas: 5,
     lettuce: 5, tomatoes: 6, carrots: 30, onions: 30, potatoes: 60, eggs: 21,
     chicken: 3, beef: 5, fish: 2, butter: 60, cereal: 180, rice: 365,
     pasta: 365, canned_tuna: 1095, peanut_butter: 180, jam: 180,
     orange_juice: 7, frozen_pizza: 90, frozen_vegetables: 180,
-    
-    // Items from Walmart receipt
-    garlic: 90, broccoli: 7, broc: 7, green: 30, crowns: 7,
-    sauce: 365, oil: 365, salt: 1095, sesame: 365, soy: 365, 
-    avocado: 5, sweet: 30, tarts: 180, peppers: 14,
-    
-    // Singular forms
-    onion: 30, potato: 60, banana: 5, apple: 21, tomato: 6, carrot: 30, egg: 21
-  };
-
-  // OCR error corrections based on your receipt
-  const ocrCorrections = {
-    'bral gngns': 'broc crowns',
-    'g nions': 'green onions',
-    'sweetarts': 'sweet tarts',
-    'bral': 'broc',
-    'gngns': 'crowns', 
-    'nions': 'onions'
-  };
-
-  // Special mappings for compound names
-  const nameMapping = {
-    'green onions': 'onions',
-    'broc crowns': 'broccoli', 
-    'sweet tarts': 'sweet',
-    'avocado oil': 'oil',
-    'sesame oil': 'oil',
-    'soy sauce': 'sauce',
-    'egg best': 'eggs'
+    garlic: 90, broccoli: 7, sauce: 365, oil: 365, salt: 1095, sesame: 365, 
+    avocado: 5, peppers: 14, onion: 30, potato: 60, banana: 5, apple: 21, tomato: 6, carrot: 30, egg: 21
   };
 
   const stopWords = ["total", "subtotal", "tax", "change", "cash", "visa", "mastercard", "amex"];
