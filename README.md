@@ -2,6 +2,13 @@
 
 A smart kitchen pantry management app that helps reduce food waste through AI-powered recipe suggestions and receipt scanning.
 
+# Preview
+
+![Recipe_Page](https://github.com/user-attachments/assets/02e0edd9-184e-49dd-bf56-e57b45f56180)
+![Home_Page](https://github.com/user-attachments/assets/5be83121-4e9d-4b17-80a6-46a0d88f77e6)
+![Recipe_Suggestions](https://github.com/user-attachments/assets/3305ab80-9797-415a-99b8-0a18f6d0d067)
+
+
 ## Features
 
 - 🥬 **Smart Pantry Management**: Track food items with expiry dates
@@ -129,6 +136,11 @@ The `.env` file is already included in `.gitignore` to prevent accidental commit
 4. Test your changes
 5. Submit a pull request
 
+## Contributors for Submission to Spurhacks 2025
+- [@JordanKing22](https://github.com/JordanKing22) – Project Lead & Backend  
+- [@meghanavusirika](https://github.com/meghanavusirika) – UX/UI Designer  
+- [@manahilbashir](https://github.com/manahilbashir) – Frontend Developer and Designer  
+- [@PritNotPrinter](https://github.com/PritNotPrinter) - Pitch Lead and OCR Integration
 ## License
 
 MIT License
