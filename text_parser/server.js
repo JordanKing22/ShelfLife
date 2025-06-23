@@ -14,15 +14,16 @@ app.use(express.json({ limit: '50mb' })); // Large limit for image data
 
 // Veryfi API configuration
 const VERYFI_CONFIG = {
+  username: process.env.VERYFI_USERNAME,
   clientId: process.env.VERYFI_CLIENT_ID,
   apiKey: process.env.VERYFI_API_KEY,
   baseUrl: 'https://api.veryfi.com/api/v8/partner/documents'
 };
 
 // Validate required environment variables
-if (!VERYFI_CONFIG.clientId || !VERYFI_CONFIG.apiKey) {
+if (!VERYFI_CONFIG.username || !VERYFI_CONFIG.clientId || !VERYFI_CONFIG.apiKey) {
   console.error('❌ Veryfi API credentials are required');
-  console.error('Please set VERYFI_CLIENT_ID and VERYFI_API_KEY in your .env file');
+  console.error('Please set VERYFI_USERNAME, VERYFI_CLIENT_ID and VERYFI_API_KEY in your .env file');
   console.error('Sign up at https://www.veryfi.com/ to get your API credentials');
   process.exit(1);
 }
@@ -39,7 +40,7 @@ app.post('/api/veryfi-upload', async (req, res) => {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
         'CLIENT-ID': VERYFI_CONFIG.clientId,
-        'AUTHORIZATION': `apikey ${VERYFI_CONFIG.apiKey}`,
+        'AUTHORIZATION': `apikey ${VERYFI_CONFIG.username}:${VERYFI_CONFIG.apiKey}`,
         'User-Agent': 'VeryfiProxy/1.0'
       },
       data: req.body,

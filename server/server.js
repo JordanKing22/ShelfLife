@@ -4,6 +4,7 @@ import pkg from 'mongodb';
 const { MongoClient, ServerApi, ObjectId } = pkg;
 import dotenv from 'dotenv';
 import path from 'path';
+import LocalStorageDB, { ObjectId as LocalObjectId } from './localStorage.js';
 
 // Load .env file - check both current directory and parent directory
 import { fileURLToPath } from 'url';
@@ -34,17 +35,29 @@ const client = new MongoClient(uri, {
 });
 
 let db;
+let usingLocalStorage = false;
+let ObjectIdClass = ObjectId;
 
-// Connect to MongoDB
+// Connect to MongoDB with fallback to local storage
 async function connectToMongo() {
   try {
     await client.connect();
     await client.db("admin").command({ ping: 1 });
-    console.log("Pinged your deployment. You successfully connected to MongoDB!");
+    console.log("✅ Successfully connected to MongoDB!");
     db = client.db("shelflife");
+    usingLocalStorage = false;
   } catch (error) {
-    console.error("MongoDB connection error:", error);
-    process.exit(1);
+    console.error("⚠️ MongoDB connection failed:", error.message);
+    console.log("📦 Falling back to local storage...");
+    
+    // Use local storage as fallback
+    const localDB = new LocalStorageDB();
+    await localDB.init();
+    db = localDB;
+    usingLocalStorage = true;
+    ObjectIdClass = LocalObjectId;
+    
+    console.log("✅ Using local storage backend");
   }
 }
 
@@ -65,7 +78,7 @@ const authenticateUser = async (req, res, next) => {
     
     // Verify user exists
     console.log('Auth middleware - looking up user in database');
-    const user = await db.collection('users').findOne({ _id: new ObjectId(userId) });
+    const user = await db.collection('users').findOne({ _id: new ObjectIdClass(userId) });
     console.log('Auth middleware - user found:', user ? 'YES' : 'NO');
     
     if (!user) {
@@ -122,7 +135,7 @@ app.put('/api/pantry/:id', authenticateUser, async (req, res) => {
       updatedAt: new Date()
     };
     const result = await db.collection('pantry').updateOne(
-      { _id: new ObjectId(id), userId: req.userId },
+      { _id: new ObjectIdClass(id), userId: req.userId },
       { $set: updateData }
     );
     if (result.matchedCount === 0) {
@@ -140,7 +153,7 @@ app.delete('/api/pantry/:id', authenticateUser, async (req, res) => {
   try {
     const { id } = req.params;
     const result = await db.collection('pantry').deleteOne({ 
-      _id: new ObjectId(id), 
+      _id: new ObjectIdClass(id), 
       userId: req.userId 
     });
     if (result.deletedCount === 0) {
@@ -304,7 +317,7 @@ app.put('/api/users/onboarding', authenticateUser, async (req, res) => {
     };
 
     const result = await db.collection('users').updateOne(
-      { _id: new ObjectId(req.userId) },
+      { _id: new ObjectIdClass(req.userId) },
       { $set: updateData }
     );
 
@@ -334,7 +347,7 @@ app.get('/api/users/:id', authenticateUser, async (req, res) => {
     }
     
     const user = await db.collection('users').findOne(
-      { _id: new ObjectId(id) },
+      { _id: new ObjectIdClass(id) },
       { projection: { password: 0 } } // Exclude password from response
     );
     
@@ -351,7 +364,11 @@ app.get('/api/users/:id', authenticateUser, async (req, res) => {
 
 // Health check
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'OK', message: 'ShelfLife API is running' });
+  res.json({ 
+    status: 'OK', 
+    message: 'ShelfLife API is running',
+    backend: usingLocalStorage ? 'local-storage' : 'mongodb'
+  });
 });
 
 // Start server
