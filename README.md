@@ -61,7 +61,7 @@ VERYFI_PROXY_PORT=3002
 3. Get your connection string and replace credentials in `MONGODB_URI`
 
 #### Veryfi API (Receipt Scanning)
-1. Sign up at [Veryfi](https://www.veryfi.com/)
+1. Sign up at [Veryfi](https://app.veryfi.com/auth/register/?ref=header)
 2. Get your Client ID and API Key from dashboard
 3. Add to `VERYFI_CLIENT_ID` and `VERYFI_API_KEY`
 
