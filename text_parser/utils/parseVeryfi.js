@@ -68,7 +68,7 @@ export function parseItemsFromVeryfi(veryfiData) {
     pickles: 365, olives: 365, capers: 365, sundried: 365, artichokes_jarred: 365,
     
     // Frozen (clearly marked as frozen)
-    frozen: 180, frozen_vegetables: 180, frozen_fruits: 180, frozen_berries: 180, frozen_pizza: 90, frozen_waffles: 90,
+    frozen_vegetables: 180, frozen_fruits: 180, frozen_berries: 180, frozen_pizza: 90, frozen_waffles: 90,
     ice_cream: 90, frozen_yogurt: 90, frozen_peas: 180, frozen_corn: 180, frozen_broccoli: 180, frozen_spinach: 180,
     
     // Beverages
@@ -90,9 +90,6 @@ export function parseItemsFromVeryfi(veryfiData) {
     // International/Specialty
     tofu: 7, tempeh: 7, seitan: 7, kimchi: 14, miso: 365, tahini: 365, hummus: 7,
     curry_paste: 365, garam_masala: 365, cumin: 365, turmeric: 365,
-    
-    // Items from common receipts
-    tarts: 180, best: 21, organic: 7, fresh: 7, natural: 7, free_range: 7, grass_fed: 7,
     
     // Generic categories
     produce: 7, meat: 5, dairy: 7, bakery: 4, deli: 3, seafood: 2
