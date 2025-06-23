@@ -2,6 +2,13 @@
 
 A smart kitchen pantry management app that helps reduce food waste through AI-powered recipe suggestions and receipt scanning.
 
+# Preview
+
+![Recipe_Page](https://github.com/user-attachments/assets/02e0edd9-184e-49dd-bf56-e57b45f56180)
+![Home_Page](https://github.com/user-attachments/assets/5be83121-4e9d-4b17-80a6-46a0d88f77e6)
+![Recipe_Suggestions](https://github.com/user-attachments/assets/3305ab80-9797-415a-99b8-0a18f6d0d067)
+
+
 ## Features
 
 - 🥬 **Smart Pantry Management**: Track food items with expiry dates
@@ -54,7 +61,7 @@ VERYFI_PROXY_PORT=3002
 3. Get your connection string and replace credentials in `MONGODB_URI`
 
 #### Veryfi API (Receipt Scanning)
-1. Sign up at [Veryfi](https://www.veryfi.com/)
+1. Sign up at [Veryfi](https://app.veryfi.com/auth/register/?ref=header)
 2. Get your Client ID and API Key from dashboard
 3. Add to `VERYFI_CLIENT_ID` and `VERYFI_API_KEY`
 
@@ -86,7 +93,7 @@ cd ..
 
 Start all services (requires 3 terminals):
 
-**Terminal 1 - Frontend (Port 8086):**
+**Terminal 1 - Frontend (Port 8080):**
 ```bash
 npm run dev
 ```
@@ -105,7 +112,7 @@ npm start
 
 ### 5. Access the Application
 
-Open your browser to: `http://localhost:8086`
+Open your browser to: `http://localhost:8080`
 
 ## Security Notes
 
@@ -115,7 +122,7 @@ The `.env` file is already included in `.gitignore` to prevent accidental commit
 
 ## Architecture
 
-- **Frontend**: React app running on port 8086
+- **Frontend**: React app running on port 8080
 - **Main Backend**: Express server on port 3001 (handles auth, pantry, recipes)
 - **Veryfi Proxy**: Express server on port 3002 (handles receipt OCR)
 - **Database**: MongoDB for user data, pantry items, and recipes
@@ -129,6 +136,11 @@ The `.env` file is already included in `.gitignore` to prevent accidental commit
 4. Test your changes
 5. Submit a pull request
 
+## Contributors for Submission to Spurhacks 2025
+- [@JordanKing22](https://github.com/JordanKing22) – Project Lead & Backend  
+- [@meghanavusirika](https://github.com/meghanavusirika) – UX/UI Designer  
+- [@manahilbashir](https://github.com/manahilbashir) – Frontend Developer and Designer  
+- [@PritNotPrinter](https://github.com/PritNotPrinter) - Pitch Lead and OCR Integration
 ## License
 
 MIT License
